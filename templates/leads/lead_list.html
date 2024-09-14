@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+    <style>
+        .lead {
+            padding-top:10px;
+            padding-bottom: 10px;
+            padding-left: 6px;
+            padding-right: 6px;
+            margin-top : 10px;
+            background-color: grey;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <h1>This is list of all our leads</h1>
+    <ul>
+        {% for lead in leads %}
+            <li class="lead"> <a href="/leads/{{ lead.pk }}"> {{ lead }} </a> </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
