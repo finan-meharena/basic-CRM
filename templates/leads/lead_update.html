@@ -7,6 +7,7 @@
 </head>
 <body>
     <h1>
+        <a href="{% url "leads:lead-detail" lead.pk %}">Go back to {{lead.first_name}} details ?  </a> <br>
       Update lead :  {{ lead.first_name }}
     </h1>
     <form method="POST" action=".">

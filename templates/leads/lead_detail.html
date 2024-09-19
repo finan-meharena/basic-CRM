@@ -7,11 +7,17 @@
 </head>
 <body>
     <h1>
-        <a href="/leads/">back to leads</a> <hr>
+        <a href="{% url "leads:lead-list" %}">back to leads</a> <hr>
         {{ lead.first_name }}
         <p>Agent for this lead is : {{ lead.agent }} </p>
         <p>Age is : {{ lead.age }} </p>
-        <hr><a href="/leads/{{lead.id}}/update/">Update Lead</a>
+
+        {% comment %} <hr><a href="/leads/{{lead.id}}/update/">Update Lead</a> {% endcomment %}
+        <hr><a href="{% url 'leads:lead-update' lead.id %}">Update Lead</a>
+
+        <a href="/leads/{{lead.pk}}/delete/">Delete</a>
+
+        <br>
     </h1>
 </body>
 </html>
