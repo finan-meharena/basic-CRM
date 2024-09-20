@@ -27,9 +27,5 @@
     </div>
   </section>
 
-        {% comment %} <hr><a href="/leads/{{lead.id}}/update/">Update Lead</a> {% endcomment %}
-        <a href="/leads/{{lead.pk}}/delete/">Delete</a>
-
-    <a href="{% url "leads:lead-detail" lead.pk %}">Go back to {{lead.first_name}} details ?  </a> <br>    Update lead :  {{ lead.first_name }}
-
+      
 {% endblock content %}
