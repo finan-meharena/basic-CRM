@@ -1,7 +1,6 @@
 from django.urls import path
 import leads.views as lead_views
 
-
 app_name = "leads"
 
 urlpatterns = [
