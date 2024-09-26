@@ -1,4 +1,5 @@
 from django.core.mail import send_mail
+from django.contrib.auth.forms import UserCreationForm
 from django.db.models.base import Model as Model
 from django.db.models.query import QuerySet
 from django.http import HttpResponse
@@ -6,11 +7,18 @@ from django.views import generic
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from .models import Lead, Agent
-from .forms import LeadForm, LeadModelForm
+from .forms import LeadForm, LeadModelForm, CustomUserCreationForm
 
 # CRUD -> Create, Retrieve, Update , Delete + List
 
 # Class Based Views
+
+class SignupView(generic.CreateView):
+    template_name = "registration/signup.html"
+    form_class = CustomUserCreationForm
+    
+    def get_success_url(self):
+        return reverse("leads:lead-list")
 
 class LandingPageView(generic.TemplateView):
     template_name = "landing_page.html"

@@ -22,7 +22,6 @@ class Lead(models.Model):
     def __str__(self):
         return self.first_name
     
-    
     # SOURCE_CHOICES = (
     #     ('YouTube', "YouTube"),
     #     ("Google", "Google"),
