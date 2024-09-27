@@ -1,5 +1,6 @@
 from django.core.mail import send_mail
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models.base import Model as Model
 from django.db.models.query import QuerySet
 from django.http import HttpResponse
@@ -23,17 +24,17 @@ class SignupView(generic.CreateView):
 class LandingPageView(generic.TemplateView):
     template_name = "landing_page.html"
 
-class LeadListView(generic.ListView):
+class LeadListView(LoginRequiredMixin, generic.ListView):
     template_name = "leads/lead_list.html"
     queryset = Lead.objects.all()
     context_object_name = "leads"
     
-class LeadDetailView(generic.DetailView):
+class LeadDetailView(LoginRequiredMixin, generic.DetailView):
     template_name = "leads/lead_detail.html"
     queryset = Lead.objects.all()
     context_object_name = "lead"
     
-class LeadCreateView(generic.CreateView):
+class LeadCreateView(LoginRequiredMixin, generic.CreateView):
     template_name = "leads/lead_create.html"
     form_class = LeadModelForm
     
@@ -51,7 +52,7 @@ class LeadCreateView(generic.CreateView):
         
         return super(LeadCreateView, self).form_valid(form)
 
-class LeadUpdateView(generic.UpdateView):
+class LeadUpdateView(LoginRequiredMixin, generic.UpdateView):
     form_class = LeadModelForm
     queryset = Lead.objects.all()
     template_name = "leads/lead_update.html"
@@ -59,7 +60,7 @@ class LeadUpdateView(generic.UpdateView):
     def get_success_url(self):
         return reverse("leads:lead-detail", kwargs={"pk": self.object.pk})
 
-class LeadDeleteView(generic.DeleteView):
+class LeadDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = Lead
     template_name = "leads/lead_delete.html"
     

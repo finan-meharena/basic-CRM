@@ -1,4 +1,6 @@
 from pathlib import Path
+# from django.urls import reverse # raises AppRegistryNotReady so use reverse_lazy as it waits till url patters are resolved
+from django.urls import reverse_lazy
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -117,3 +119,4 @@ STATIC_ROOT = "static_root"
 AUTH_USER_MODEL = 'leads.User'
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 LOGIN_REDIRECT_URL = '/leads'
+LOGIN_URL = reverse_lazy("login")
