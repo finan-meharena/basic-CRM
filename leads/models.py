@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models.signals import post_save
 from django.contrib.auth.models import AbstractUser
 
 # Create your models here.
@@ -6,8 +7,16 @@ from django.contrib.auth.models import AbstractUser
 class User(AbstractUser): # inheriting fields lile first_name, last_name, email, is_staff..
     pass
 
+class UserProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    
+    def __str__(self):
+        return self.user.username
+    
+
 class Agent(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    organization = models.ForeignKey(UserProfile, on_delete=models.CASCADE) 
     
     def __str__(self):
         return self.user.username
@@ -22,14 +31,11 @@ class Lead(models.Model):
     def __str__(self):
         return self.first_name
     
-    # SOURCE_CHOICES = (
-    #     ('YouTube', "YouTube"),
-    #     ("Google", "Google"),
-    #     ("NewsLetter", "NewsLetter"),
-    # )
-    # phoned  = models.BooleanField(default=False)
-    # source = models.CharField(choices=SOURCE_CHOICES, max_length=100)
-    # profile_picture = models.ImageField(blank=True, null=True)  # needs pillow package to use ImageField
-    # special_files = models.FileField(blank=True, null=True)
+
+def post_user_created_signal(sender, instance, created, **kwargs):
+   if created:
+       UserProfile.objects.create(user=instance)
+
+post_save.connect(post_user_created_signal, sender=User)
     
     
