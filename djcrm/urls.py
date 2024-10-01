@@ -9,6 +9,7 @@ urlpatterns = [
     path("", LandingPageView.as_view(), name="landing-page"),
     path('admin/', admin.site.urls),
     path("leads/", include('leads.urls', namespace="leads")),
+    path("agents/", include('agents.urls'), name=""),
     path("signup/", SignupView.as_view(), name="signup"),
     path("login/", LoginView.as_view(), name='login'),
     path("logout/", LogoutView.as_view(), name='logout'),
