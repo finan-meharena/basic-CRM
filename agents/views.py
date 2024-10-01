@@ -13,6 +13,12 @@ class AgentListView(LoginRequiredMixin, generic.ListView):
 
     def get_queryset(self) -> QuerySet[Any]:
         return Agent.objects.all()
+
+class AgentDetailView(LoginRequiredMixin, generic.DetailView):
+    template_name  = "agents/agent_detail.html"
+    queryset = Agent.objects.all()
+    context_object_name = 'agent'
+    model = Agent
     
 
 class AgentCreateView(LoginRequiredMixin, generic.CreateView):
