@@ -34,5 +34,12 @@ class AgentCreateView(LoginRequiredMixin, generic.CreateView):
         agent.save()
         return super(AgentCreateView, self).form_valid(form)
     
-
-# Create your views here.
+class AgentUpdateViews(LoginRequiredMixin, generic.UpdateView):
+    form_class = AgentModelForm
+    queryset = Agent.objects.all()
+    template_name = "agents/agent_update.html"
+    context_object_name = 'agent'
+    
+    def get_success_url(self) -> str:
+        return reverse("agents:agents-list")
+    
