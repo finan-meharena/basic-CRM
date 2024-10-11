@@ -2,12 +2,12 @@ from typing import Any
 from django.db.models.query import QuerySet
 from django.shortcuts import reverse
 from django.views import generic
-from django.contrib.auth.mixins import LoginRequiredMixin
+from .mixins import OrganizerAndLoginRequiredMixing
 from leads.models import Agent
 from .forms import AgentModelForm
 
 
-class AgentListView(LoginRequiredMixin, generic.ListView):
+class AgentListView(OrganizerAndLoginRequiredMixing, generic.ListView):
     template_name = "agents/agent_list.html"
     context_object_name = 'agents'
 
@@ -16,7 +16,7 @@ class AgentListView(LoginRequiredMixin, generic.ListView):
         
         return Agent.objects.filter(organization=organization)
 
-class AgentDetailView(LoginRequiredMixin, generic.DetailView):
+class AgentDetailView(OrganizerAndLoginRequiredMixing, generic.DetailView):
     template_name  = "agents/agent_detail.html"
     context_object_name = 'agent'
     model = Agent
@@ -26,7 +26,7 @@ class AgentDetailView(LoginRequiredMixin, generic.DetailView):
         return Agent.objects.filter(organization=organization)
     
 
-class AgentCreateView(LoginRequiredMixin, generic.CreateView):
+class AgentCreateView(OrganizerAndLoginRequiredMixing, generic.CreateView):
     template_name = 'agents/agent_create.html'
     form_class = AgentModelForm
     
@@ -39,7 +39,7 @@ class AgentCreateView(LoginRequiredMixin, generic.CreateView):
         agent.save()
         return super(AgentCreateView, self).form_valid(form)
     
-class AgentUpdateViews(LoginRequiredMixin, generic.UpdateView):
+class AgentUpdateViews(OrganizerAndLoginRequiredMixing, generic.UpdateView):
     form_class = AgentModelForm
     queryset = Agent.objects.all()
     template_name = "agents/agent_update.html"
@@ -48,7 +48,7 @@ class AgentUpdateViews(LoginRequiredMixin, generic.UpdateView):
     def get_success_url(self) -> str:
         return reverse("agents:agents-list")
 
-class AgentDeleteView(LoginRequiredMixin, generic.DeleteView):
+class AgentDeleteView(OrganizerAndLoginRequiredMixing, generic.DeleteView):
     model = Agent
     template_name = "agents/agent_delete.html"
     

@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm, UsernameField
 from .models import Lead, User
 
+import ast
 
 class LeadModelForm(forms.ModelForm):
     class Meta: # specifiy some information about the model

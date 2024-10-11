@@ -9,6 +9,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from .models import Lead, Agent
 from .forms import LeadForm, LeadModelForm, CustomUserCreationForm
+from agents.mixins import OrganizerAndLoginRequiredMixing
 
 # CRUD -> Create, Retrieve, Update , Delete + List
 
@@ -34,7 +35,7 @@ class LeadDetailView(LoginRequiredMixin, generic.DetailView):
     queryset = Lead.objects.all()
     context_object_name = "lead"
     
-class LeadCreateView(LoginRequiredMixin, generic.CreateView):
+class LeadCreateView(OrganizerAndLoginRequiredMixing, generic.CreateView):
     template_name = "leads/lead_create.html"
     form_class = LeadModelForm
     
@@ -52,7 +53,7 @@ class LeadCreateView(LoginRequiredMixin, generic.CreateView):
         
         return super(LeadCreateView, self).form_valid(form)
 
-class LeadUpdateView(LoginRequiredMixin, generic.UpdateView):
+class LeadUpdateView(OrganizerAndLoginRequiredMixing, generic.UpdateView):
     form_class = LeadModelForm
     queryset = Lead.objects.all()
     template_name = "leads/lead_update.html"
@@ -60,7 +61,7 @@ class LeadUpdateView(LoginRequiredMixin, generic.UpdateView):
     def get_success_url(self):
         return reverse("leads:lead-detail", kwargs={"pk": self.object.pk})
 
-class LeadDeleteView(LoginRequiredMixin, generic.DeleteView):
+class LeadDeleteView(OrganizerAndLoginRequiredMixing, generic.DeleteView):
     model = Lead
     template_name = "leads/lead_delete.html"
     
